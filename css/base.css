@@ -1,0 +1,322 @@
+/* ==========================================================================
+   base.css — tipografías, tokens de diseño (modo claro y oscuro) y estilos
+   base. Concepto de diseño: "corte transversal". Cada sección es un estrato
+   de Quintana Roo (cielo, selva, caliza, cenote, mar) que se apila sobre el
+   anterior con esquinas redondeadas, como capas de roca y agua.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("../assets/fuentes/bricolage-grotesque-latin-600-normal.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("../assets/fuentes/bricolage-grotesque-latin-700-normal.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("../assets/fuentes/bricolage-grotesque-latin-800-normal.woff2") format("woff2");
+  font-weight: 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Figtree";
+  src: url("../assets/fuentes/figtree-latin-400-normal.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Figtree";
+  src: url("../assets/fuentes/figtree-latin-400-italic.woff2") format("woff2");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Figtree";
+  src: url("../assets/fuentes/figtree-latin-600-normal.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Figtree";
+  src: url("../assets/fuentes/figtree-latin-700-normal.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+/* Layout: estratos apilados (cielo → selva → caliza → cenote → mar), contenido en una columna de 74rem */
+:root {
+  /* Paleta principal */
+  --fondo: #eef5f1;          /* caliza clara con tinte de selva */
+  --superficie: #ffffff;     /* tarjetas */
+  --superficie-2: #f6faf8;
+  --tinta: #0d2b2e;          /* tinta de cenote profundo */
+  --tinta-suave: #3d5a5c;
+  --tinta-tenue: #5f7a7b;
+  --linea: rgba(13, 43, 46, 0.14);
+  --linea-fuerte: rgba(13, 43, 46, 0.28);
+
+  --caribe: #0b8a8f;         /* turquesa del Caribe */
+  --caribe-texto: #06686c;
+  --selva: #1d6b45;
+  --selva-texto: #17593a;
+  --coral: #e0503f;          /* acento: coral y flamenco */
+  --coral-texto: #b83a2b;
+  --flamenco: #d94a7c;
+  --arena: #f1dfb4;
+  --cenote: #0b3d5c;
+  --sobre-acento: #ffffff;
+
+  /* Fondos de cada estrato */
+  --fondo-caribe: #dff2f0;
+  --fondo-selva: #e3f0e5;
+  --fondo-flamenco: #fae8ee;
+  --fondo-cenote: #ddeaf5;
+  --fondo-caliza: #ecebe3;
+  --fondo-cielo: #e3f0fa;
+  --fondo-coral: #fbe9e3;
+  --fondo-ciclo: #ece7f8;
+
+  /* Estados de riesgo (NOM-059) */
+  --riesgo-p: #b3261e;
+  --riesgo-a: #a15c00;
+  --riesgo-pr: #1f5fa8;
+  --riesgo-p-fondo: #fde2df;
+  --riesgo-a-fondo: #fdefd6;
+  --riesgo-pr-fondo: #dfeafb;
+  --bien: #1c7a45;
+  --bien-fondo: #dcf3e4;
+  --mal: #b3261e;
+  --mal-fondo: #fde2df;
+
+  /* Tipografía */
+  --fuente-display: "Bricolage Grotesque", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --fuente-texto: "Figtree", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --t-xs: 0.8rem;
+  --t-s: 0.9rem;
+  --t-base: 1.0625rem;
+  --t-m: 1.2rem;
+  --t-l: clamp(1.35rem, 1.1rem + 1vw, 1.7rem);
+  --t-xl: clamp(2rem, 1.4rem + 2.6vw, 3.1rem);
+  --t-xxl: clamp(2.7rem, 1.6rem + 5vw, 5.6rem);
+
+  /* Espacio y forma */
+  --radio: 18px;
+  --radio-s: 10px;
+  --radio-estrato: clamp(28px, 5vw, 64px);
+  --sombra: 0 1px 2px rgba(13, 43, 46, 0.06), 0 8px 24px -12px rgba(13, 43, 46, 0.25);
+  --sombra-alta: 0 24px 60px -20px rgba(6, 30, 36, 0.45);
+  --ancho: 74rem;
+  --barra-alto: 64px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fondo: #071a1e;
+    --superficie: #0f262b;
+    --superficie-2: #0c2125;
+    --tinta: #e3f2ef;
+    --tinta-suave: #b0c9c6;
+    --tinta-tenue: #8ea9a7;
+    --linea: rgba(227, 242, 239, 0.14);
+    --linea-fuerte: rgba(227, 242, 239, 0.3);
+    --caribe: #37c9c4;
+    --caribe-texto: #5edcd6;
+    --selva: #56c287;
+    --selva-texto: #7ad6a2;
+    --coral: #ff7a69;
+    --coral-texto: #ff9a8c;
+    --flamenco: #ff85ad;
+    --arena: #3a3222;
+    --cenote: #a7d8f3;
+    --sobre-acento: #0b1d20;
+    --fondo-caribe: #0a2629;
+    --fondo-selva: #0c2319;
+    --fondo-flamenco: #26121c;
+    --fondo-cenote: #0a1d2c;
+    --fondo-caliza: #1a1a15;
+    --fondo-cielo: #0b1b28;
+    --fondo-coral: #271410;
+    --fondo-ciclo: #17132b;
+    --riesgo-p: #ff8a80;
+    --riesgo-a: #f5b85a;
+    --riesgo-pr: #8ab8ff;
+    --riesgo-p-fondo: #3a1512;
+    --riesgo-a-fondo: #33240a;
+    --riesgo-pr-fondo: #0f2240;
+    --bien: #6fdc9b;
+    --bien-fondo: #0f2e1c;
+    --mal: #ff8a80;
+    --mal-fondo: #3a1512;
+    --sombra: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 28px -12px rgba(0, 0, 0, 0.7);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --fondo: #071a1e;
+  --superficie: #0f262b;
+  --superficie-2: #0c2125;
+  --tinta: #e3f2ef;
+  --tinta-suave: #b0c9c6;
+  --tinta-tenue: #8ea9a7;
+  --linea: rgba(227, 242, 239, 0.14);
+  --linea-fuerte: rgba(227, 242, 239, 0.3);
+  --caribe: #37c9c4;
+  --caribe-texto: #5edcd6;
+  --selva: #56c287;
+  --selva-texto: #7ad6a2;
+  --coral: #ff7a69;
+  --coral-texto: #ff9a8c;
+  --flamenco: #ff85ad;
+  --arena: #3a3222;
+  --cenote: #a7d8f3;
+  --sobre-acento: #0b1d20;
+  --fondo-caribe: #0a2629;
+  --fondo-selva: #0c2319;
+  --fondo-flamenco: #26121c;
+  --fondo-cenote: #0a1d2c;
+  --fondo-caliza: #1a1a15;
+  --fondo-cielo: #0b1b28;
+  --fondo-coral: #271410;
+  --fondo-ciclo: #17132b;
+  --riesgo-p: #ff8a80;
+  --riesgo-a: #f5b85a;
+  --riesgo-pr: #8ab8ff;
+  --riesgo-p-fondo: #3a1512;
+  --riesgo-a-fondo: #33240a;
+  --riesgo-pr-fondo: #0f2240;
+  --bien: #6fdc9b;
+  --bien-fondo: #0f2e1c;
+  --mal: #ff8a80;
+  --mal-fondo: #3a1512;
+  --sombra: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 28px -12px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
+}
+
+/* ---------------------------- Base ---------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--barra-alto) + 16px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--fuente-texto);
+  font-size: var(--t-base);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img, svg { max-width: 100%; }
+img { display: block; height: auto; }
+
+h1, h2, h3, h4 {
+  font-family: var(--fuente-display);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+h2 { font-size: var(--t-xl); font-weight: 800; }
+h3 { font-size: var(--t-l); font-weight: 700; }
+h4 { font-size: var(--t-m); font-weight: 700; }
+p { margin: 0 0 1em; }
+ul, ol { margin: 0 0 1em; padding-left: 1.25em; }
+li + li { margin-top: 0.3em; }
+small { font-size: 0.85em; }
+strong { font-weight: 700; }
+
+a { color: var(--caribe-texto); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+
+:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+[hidden] { display: none !important; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.saltar {
+  position: absolute; left: 16px; top: -60px; z-index: 200;
+  background: var(--tinta); color: var(--fondo); padding: 0.6rem 1rem; border-radius: var(--radio-s);
+  font-weight: 700; text-decoration: none;
+}
+.saltar:focus { top: calc(env(safe-area-inset-top, 0px) + 10px); }
+
+.envoltura {
+  width: 100%;
+  max-width: var(--ancho);
+  margin-inline: auto;
+  padding-inline: max(16px, 4vw);
+}
+
+.eyebrow {
+  font-size: var(--t-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tono-texto, var(--caribe-texto));
+  margin-bottom: 0.6rem;
+}
+
+.intro {
+  font-size: var(--t-m);
+  color: var(--tinta-suave);
+  max-width: 62ch;
+}
+
+.nota {
+  font-size: var(--t-s);
+  color: var(--tinta-tenue);
+  max-width: 75ch;
+}
+
+.num, .tabular { font-variant-numeric: tabular-nums; }
+
+kbd {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--linea-fuerte);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--superficie-2);
+}
+
+.error-carga {
+  margin: 2rem auto; max-width: 40rem; padding: 1rem 1.2rem;
+  border-radius: var(--radio-s); background: var(--mal-fondo); color: var(--mal); font-weight: 700;
+}
+
+.aviso {
+  position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); z-index: 400;
+  transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+  background: var(--tinta); color: var(--fondo);
+  padding: 0.55rem 1rem; border-radius: 999px; font-size: var(--t-s); font-weight: 700;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  margin: 0;
+}
+.aviso.visible { opacity: 1; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

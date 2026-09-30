@@ -1,0 +1,44 @@
+/* ==========================================================================
+   impresion.css — versión optimizada para imprimir el tríptico.
+   Solo se imprime la copia del tríptico (#triptico-impresion): 2 páginas
+   tamaño carta en horizontal, sin márgenes, con colores e ilustraciones.
+   ========================================================================== */
+
+@page {
+  size: letter landscape;
+  margin: 0;
+}
+
+@media print {
+  html, body {
+    background: #ffffff !important;
+    color: #14302f !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Oculta botones, menú, secciones y ventanas: solo queda el tríptico */
+  body > *:not(#triptico-impresion) { display: none !important; }
+  #triptico-impresion { display: block !important; }
+
+  .hoja {
+    width: 11in;
+    height: 8.5in;
+    margin: 0;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    break-after: page;
+    page-break-after: always;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .hoja:last-child { break-after: auto; page-break-after: auto; }
+  .panel { break-inside: avoid; page-break-inside: avoid; }
+
+  /* Las animaciones no tienen sentido en papel */
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  a { color: inherit !important; text-decoration: none !important; }
+}

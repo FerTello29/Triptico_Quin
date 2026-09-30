@@ -1,0 +1,142 @@
+/* ==========================================================================
+   triptico.css — el tríptico como hoja física (carta horizontal, 11 × 8.5 in).
+   La hoja siempre se ve como papel impreso: usa su propia paleta fija en
+   modo claro y oscuro, igual que se verá al imprimir.
+   ========================================================================== */
+
+.triptico-app { margin-top: 1rem; }
+.triptico-controles { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 1rem; }
+.triptico-acciones { display: flex; flex-wrap: wrap; gap: 10px; }
+.segmentado { display: inline-flex; padding: 4px; gap: 4px; border-radius: 999px; background: var(--superficie); border: 1px solid var(--linea); flex-wrap: wrap; }
+.segmentado button { min-height: 40px; padding: 0.35rem 0.95rem; border-radius: 999px; border: 0; background: transparent; color: var(--tinta-suave); font-weight: 700; }
+.segmentado button small { font-weight: 400; }
+.segmentado button[aria-pressed="true"] { background: var(--tinta); color: var(--fondo); }
+
+.triptico-escala { --escala: 1; position: relative; width: 100%; overflow: hidden; height: 8.5in; }
+.triptico-hojas {
+  width: 11in; display: grid; gap: 24px;
+  transform: scale(var(--escala)); transform-origin: top left;
+}
+.triptico-escala[data-mostrar="exterior"] .hoja-interior,
+.triptico-escala[data-mostrar="interior"] .hoja-exterior { display: none; }
+.triptico-hojas .hoja { box-shadow: 0 30px 60px -30px rgba(6, 30, 36, 0.55), 0 0 0 1px rgba(6, 30, 36, 0.08); border-radius: 4px; }
+/* Guías de doblez: solo en pantalla */
+.triptico-hojas .panel + .panel { box-shadow: inset 1px 0 0 rgba(20, 48, 47, 0.12); }
+.triptico-hojas .panel + .panel::before {
+  content: "doblez"; position: absolute; top: 3px; left: 4px;
+  font-size: 6pt; color: rgba(20, 48, 47, 0.45); letter-spacing: 0.05em;
+}
+
+.triptico-impresion { display: none; }
+
+/* ---------------------------- La hoja ---------------------------- */
+.hoja {
+  --t-tinta: #14302f;
+  --t-suave: #3f5a58;
+  --t-turquesa: #0b7f84;
+  --t-selva: #1d6b45;
+  --t-coral: #cf4636;
+  --t-arena: #f6efdb;
+  --t-linea: rgba(20, 48, 47, 0.16);
+  width: 11in; height: 8.5in;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  background: #ffffff; color: var(--t-tinta);
+  font-family: var(--fuente-texto); font-size: 8.7pt; line-height: 1.36;
+  overflow: hidden;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.panel { position: relative; padding: 0.3in 0.3in 0.26in; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.panel h1, .panel h2, .panel h3 { font-family: var(--fuente-display); color: var(--t-tinta); letter-spacing: -0.01em; }
+.panel h2 { font-size: 13.5pt; font-weight: 800; margin: 0.12in 0 0.05in; display: flex; align-items: center; gap: 5px; }
+.panel h2:first-child, .panel .t-etiqueta + h2 { margin-top: 0; }
+.panel h3 { font-size: 9.8pt; font-weight: 700; margin: 0.1in 0 0.04in; }
+.panel p { margin: 0 0 0.05in; }
+.panel ul, .panel ol { margin: 0 0 0.05in; padding-left: 1.1em; }
+.panel li { margin: 0 0 0.02in; }
+.panel li + li { margin-top: 0; }
+.panel strong { color: var(--t-tinta); }
+.t-etiqueta { font-size: 6.8pt; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--t-turquesa); margin-bottom: 0.04in !important; }
+.t-nota { font-size: 6.4pt; color: var(--t-suave); }
+.t-lista { padding-left: 1em; }
+.t-lista li::marker { color: var(--t-turquesa); }
+
+/* Presentación (solapa interior) */
+.panel-presentacion { background: #ffffff; }
+.t-cifras { list-style: none; padding: 0 !important; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.t-cifras li { margin: 0; padding: 5px 7px; border-radius: 7px; background: #e6f4f2; display: grid; }
+.t-cifras strong { font-family: var(--fuente-display); font-size: 12.5pt; font-weight: 800; color: var(--t-turquesa); line-height: 1.1; }
+.t-cifras span { font-size: 6.9pt; color: var(--t-suave); }
+.t-mapa { display: grid; grid-template-columns: 1.3in 1fr; gap: 8px; align-items: center; margin: 0.08in 0 0.02in; }
+.silueta-estado { width: 100%; height: auto; display: block; }
+.t-mapa-leyenda { list-style: none; padding: 0 !important; margin: 0; font-size: 6.7pt; }
+.t-mapa-leyenda li { display: flex; align-items: center; gap: 4px; margin-bottom: 2px; }
+.t-mapa-leyenda span { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.t-indice { font-size: 7.2pt; color: var(--t-suave); }
+
+/* Contraportada */
+.panel-contraportada { background: var(--t-arena); }
+.t-acciones { list-style: none; padding: 0 !important; display: grid; gap: 4px; }
+.t-acciones li { display: grid; grid-template-columns: 16px 1fr; gap: 5px; padding: 4px 6px; border-radius: 6px; background: #ffffff; margin: 0; }
+.t-fuentes { font-size: 6.4pt; color: var(--t-suave); padding-left: 1.3em !important; }
+.t-fuentes li { margin-bottom: 1px; }
+.t-pie { margin-top: auto !important; padding-top: 6px; border-top: 1px solid var(--t-linea); font-size: 6.6pt; color: var(--t-suave); }
+
+/* Portada */
+.panel-portada {
+  padding: 0; color: #ffffff;
+  background: linear-gradient(170deg, #0c5f66 0%, #0a4458 55%, #082f45 100%);
+}
+.t-portada-arte { height: 3.1in; overflow: hidden; }
+.t-portada-arte svg { width: 100%; height: 100%; display: block; }
+.t-portada-texto { padding: 0.18in 0.3in 0; }
+.panel-portada .t-etiqueta { color: #8fe8e1; }
+.panel-portada h1 { color: #ffffff; margin: 0 0 0.06in; font-size: 11.5pt; font-weight: 700; line-height: 1.2; }
+.panel-portada h1 span { display: block; font-size: 29pt; font-weight: 800; letter-spacing: -0.03em; line-height: 0.95; margin-bottom: 0.05in; color: #ffffff; }
+.t-lema { font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; color: #ffd3a1; }
+.t-bajada { color: #d7efec; font-size: 8.2pt; line-height: 1.4; }
+.t-portada-especies { list-style: none; padding: 0 !important; margin: 0.08in 0 0 !important; display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
+.t-portada-especies li { margin: 0; display: grid; gap: 3px; justify-items: center; font-size: 6.6pt; color: #d7efec; font-weight: 700; }
+.t-portada-especies svg { width: 100%; height: auto; aspect-ratio: 1; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.5); display: block; }
+.t-sabias { margin: 0.06in 0; padding: 6px 8px; border-radius: 7px; background: #fff4e0; border-left: 3px solid var(--t-coral); font-size: 7.3pt; }
+.t-glosario { margin: 0; display: grid; gap: 2px; font-size: 7.2pt; }
+.t-glosario div { display: flex; gap: 4px; }
+.t-glosario dt { font-weight: 700; color: var(--t-turquesa); }
+.t-glosario dd { margin: 0; }
+.t-estudiante { margin: auto 0.3in 0.26in; padding: 7px 9px; border-radius: 8px; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.28); display: grid; gap: 2px; }
+.t-estudiante div { display: grid; grid-template-columns: 0.95in 1fr; gap: 4px; }
+.t-estudiante dt { font-weight: 700; color: #bfe9e5; }
+.t-estudiante dd { margin: 0; color: #ffffff; overflow-wrap: anywhere; }
+
+/* Interior */
+.panel-vida { background: #ffffff; }
+.panel-esferas { background: #f1f8f7; }
+.panel-sociedad { background: #ffffff; }
+.panel-vida h2, .panel-esferas h2, .panel-sociedad h2 { border-bottom: 2px solid var(--t-turquesa); padding-bottom: 2px; }
+.t-ecos { list-style: none; padding: 0 !important; display: grid; grid-template-columns: 1fr; gap: 1px; }
+.t-ecos li { margin: 0; }
+.t-especies { list-style: none; padding: 0 !important; display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin: 0.04in 0 0.02in !important; }
+.t-especies li { margin: 0; display: grid; gap: 1px; text-align: center; font-size: 5.7pt; line-height: 1.15; }
+.t-especies svg { width: 100%; height: auto; aspect-ratio: 1; border-radius: 50%; display: block; }
+.t-especies em { display: block; font-style: normal; font-weight: 700; color: var(--t-coral); }
+.t-cenote { margin: 0.02in 0 0.04in; border-radius: 6px; overflow: hidden; height: 1.25in; background: #e3d3ae; }
+.t-cenote svg { width: 100%; height: 100%; display: block; }
+.t-ciclos { list-style: none; padding: 0 !important; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.t-ciclos li { margin: 0; padding: 4px 6px; border-radius: 6px; background: #ffffff; border-left: 3px solid var(--ciclo); font-size: 7.6pt; }
+.t-ciclos strong { display: block; }
+.t-tabla { width: 100%; border-collapse: collapse; font-size: 7.6pt; margin-bottom: 0.04in; }
+.t-tabla th, .t-tabla td { padding: 2.5px 3px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--t-linea); }
+.t-tabla thead th { font-size: 6.2pt; text-transform: uppercase; letter-spacing: 0.06em; color: var(--t-suave); }
+.t-tabla tbody th { font-weight: 700; white-space: nowrap; }
+.t-niveles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.t-niveles > div { padding: 4px 5px; border-radius: 6px; background: #f1f8f7; }
+.t-niveles > div:nth-child(1) { border-top: 3px solid var(--t-selva); }
+.t-niveles > div:nth-child(2) { border-top: 3px solid var(--t-turquesa); }
+.t-niveles > div:nth-child(3) { border-top: 3px solid var(--t-coral); }
+.t-niveles h3 { margin: 0 0 2px !important; font-size: 8pt !important; }
+.t-niveles ul { padding-left: 0.9em !important; font-size: 7.3pt; margin: 0 !important; }
+.t-sentidos { list-style: none; padding-left: 0 !important; }
+.t-diagrama { margin: 0.05in 0 0; height: 1.15in; }
+.t-diagrama svg { width: 100%; height: 100%; display: block; }
+.t-diagrama-zonas { height: 1.5in; margin-top: 0.06in; }
+.t-diagrama-agua { height: 1.25in; border-radius: 6px; overflow: hidden; background: #a8def2; }
+.t-frase { margin-top: auto !important; padding: 6px 8px; border-radius: 8px; background: #fdecea; color: var(--t-coral); font-family: var(--fuente-display); font-weight: 700; font-size: 9pt; text-align: center; }

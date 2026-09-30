@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tríptico Quintana Roo</title>
+  <meta name="description" content="Aplicación educativa para presentar y exponer un tríptico sobre los ecosistemas, la biodiversidad y el equilibrio ambiental de Quintana Roo, México.">
+  <meta name="author" content="Fernando Rosales Tello">
+  <meta name="theme-color" content="#0b6e74">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/componentes.css">
+  <link rel="stylesheet" href="css/secciones.css">
+  <link rel="stylesheet" href="css/presentacion.css">
+  <link rel="stylesheet" href="css/triptico.css">
+  <link rel="stylesheet" href="css/impresion.css">
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <header class="barra" id="encabezado">
+    <a class="marca" href="#inicio" aria-label="Tríptico Quintana Roo, ir al inicio">
+      <svg class="marca-logo" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="19" class="logo-fondo"/>
+        <path d="M6 22 Q13 16 20 22 T34 22 V34 H6Z" class="logo-agua"/>
+        <path d="M20 9 L20 22 M20 12 L14 9 M20 12 L26 9 M20 16 L13 14 M20 16 L27 14" class="logo-hoja"/>
+      </svg>
+      <span class="marca-texto">Quintana Roo<small>Ecosistemas y equilibrio</small></span>
+    </a>
+    <a class="seccion-actual" id="seccion-actual" href="#inicio" aria-label="Sección actual"><span aria-hidden="true">🏠</span> Inicio</a>
+    <div class="barra-acciones">
+      <button type="button" class="boton-barra boton-barra-principal" data-abrir-presentacion><span aria-hidden="true">🎤</span><span class="boton-texto"> Modo exposición</span></button>
+      <button type="button" class="boton-barra" data-imprimir="imprimir"><span aria-hidden="true">🖨️</span><span class="boton-texto"> Imprimir tríptico</span></button>
+      <button type="button" class="boton-icono" id="btn-tema" aria-label="Cambiar tema"></button>
+      <button type="button" class="boton-icono boton-menu" id="btn-menu" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú de temas">
+        <span class="hamburguesa" aria-hidden="true"><span></span><span></span><span></span></span><span class="boton-menu-texto">Menú</span>
+      </button>
+    </div>
+    <nav class="menu" id="menu" aria-label="Secciones de la app"></nav>
+  </header>
+
+  <main id="contenido" tabindex="-1">
+    <noscript>
+      <p class="error-carga">Esta aplicación necesita JavaScript activado para mostrar su contenido.</p>
+    </noscript>
+  </main>
+
+  <footer class="pie" id="pie">
+    <div class="envoltura pie-contenido">
+      <p><strong>Tríptico Quintana Roo</strong> · Ecosistemas, Biodiversidad y Equilibrio Ambiental</p>
+      <p>Elaborado por <span data-estudiante="nombre">Fernando Rosales Tello</span>. Información de INEGI, CONABIO, CONANP, SEMARNAT y el Gobierno de Quintana Roo. Ilustraciones originales del proyecto.</p>
+      <p><a href="#fuentes">Fuentes de información</a> · <a href="#inicio">Volver arriba ↑</a></p>
+    </div>
+  </footer>
+
+  <!-- Ventana emergente reutilizable (fichas, impresión) -->
+  <dialog class="modal" id="modal" aria-labelledby="modal-titulo">
+    <div class="modal-caja">
+      <div class="modal-cabeza">
+        <div>
+          <p class="modal-subtitulo" hidden></p>
+          <h2 class="modal-titulo" id="modal-titulo"></h2>
+        </div>
+        <button type="button" class="modal-cerrar boton-icono" data-cerrar-modal aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-cuerpo"></div>
+    </div>
+  </dialog>
+
+  <!-- Modo Exposición (se llena con JavaScript) -->
+  <div class="presentacion" id="presentacion" role="dialog" aria-modal="true" aria-label="Modo exposición" hidden></div>
+
+  <!-- Copia del tríptico que solo se ve al imprimir -->
+  <div id="triptico-impresion" class="triptico-impresion" aria-hidden="true"></div>
+
+  <!-- Avisos breves para lectores de pantalla -->
+  <p class="aviso" id="aviso-vivo" role="status" aria-live="polite"></p>
+
+  <!-- Núcleo -->
+  <script defer src="js/nucleo/utilidades.js"></script>
+  <script defer src="js/nucleo/ilustraciones.js"></script>
+  <!-- Modelos (Programación Orientada a Objetos) -->
+  <script defer src="js/modelos/Seccion.js"></script>
+  <script defer src="js/modelos/Ecosistema.js"></script>
+  <script defer src="js/modelos/Especie.js"></script>
+  <script defer src="js/modelos/CicloBioquimico.js"></script>
+  <script defer src="js/modelos/Pregunta.js"></script>
+  <script defer src="js/modelos/MapaLugar.js"></script>
+  <script defer src="js/modelos/Tematicos.js"></script>
+  <!-- Datos del contenido -->
+  <script defer src="js/datos/fotos.js"></script>
+  <script defer src="js/datos/contenido.js"></script>
+  <script defer src="js/datos/ecosistemas.js"></script>
+  <script defer src="js/datos/especies.js"></script>
+  <script defer src="js/datos/ciclos.js"></script>
+  <script defer src="js/datos/actividades.js"></script>
+  <script defer src="js/datos/gobierno.js"></script>
+  <script defer src="js/datos/sensoriales.js"></script>
+  <script defer src="js/datos/preguntas.js"></script>
+  <script defer src="js/datos/lugares.js"></script>
+  <script defer src="js/datos/linea-tiempo.js"></script>
+  <script defer src="js/datos/fuentes.js"></script>
+  <script defer src="js/datos/mapa-geo.js"></script>
+  <!-- Componentes -->
+  <script defer src="js/componentes/GaleriaFotos.js"></script>
+  <script defer src="js/componentes/Interfaz.js"></script>
+  <script defer src="js/componentes/MapaInteractivo.js"></script>
+  <script defer src="js/componentes/Cuestionario.js"></script>
+  <script defer src="js/componentes/Presentacion.js"></script>
+  <script defer src="js/componentes/Triptico.js"></script>
+  <script defer src="js/componentes/Navegacion.js"></script>
+  <script defer src="js/componentes/Vistas.js"></script>
+  <!-- Aplicación -->
+  <script defer src="js/app.js"></script>
+</body>
+</html>
